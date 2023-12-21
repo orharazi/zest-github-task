@@ -1,9 +1,7 @@
 import { Octokit } from '@octokit/rest';
 import { ParamsForRepositoriesSearch } from 'src/interfaces/response.interface';
 
-const octokit = new Octokit({
-  auth: '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',
-});
+const octokit = new Octokit();
 
 export const getRepoData = async (repoId: string) => {
   try {
