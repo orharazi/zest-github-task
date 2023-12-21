@@ -1,0 +1,20 @@
+{
+  "dependencies": {
+    "@nestjs/core": "^10.2.10",
+    "@nestjs/microservices": "^10.2.10"
+  },
+  "scripts": {
+    "start": "ts-node main.ts",
+    "start:dev": "nodemon",
+    "build": "tsc",
+    "lint": "eslint 'src/**/*.ts'",
+    "test": "jest",
+    "prestart:dev": "npm run build",
+    "pretest": "npm run lint",
+    "precommit": "npm test"
+  },
+  "devDependencies": {
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3"
+  }
+}

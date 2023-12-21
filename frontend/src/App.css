@@ -1,0 +1,16 @@
+#root {
+  margin: 0 auto;
+  text-align: center;
+}
+
+.tab-pane {
+  height: 70vh;
+  overflow: scroll;
+  width: 70vw;
+  margin: 0 auto;
+}
+
+.nav-tabs .search-bar {
+  width: 70vw;
+  margin: 0 auto;
+}

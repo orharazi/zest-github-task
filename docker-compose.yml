@@ -1,0 +1,29 @@
+# docker-compose.yml
+version: "3"
+
+services:
+  github-microservice:
+    build:
+      context: ./github-microservice
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development
+
+  favorites-microservice:
+    build:
+      context: ./favorites-microservice
+    ports:
+      - "3001:3001"
+    environment:
+      - NODE_ENV=development
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: dockerfile
+    ports:
+      - "4173:4173"
+    depends_on:
+      - favorites-microservice
+      - github-microservice
