@@ -1,0 +1,138 @@
+# Zest github task
+
+This is a NestJs and React app that allow users to get top 100 repositories and manage their favorites repositories.
+also, you can search for any repository on github using search by repository name.
+the results are sort by number of stars by default.
+
+in this app there are 3 services:
+
+1. **frontend**: The react app, contains the frontend code.
+
+2. **github-microservice**: NestJS microservice that allow interactions with github API. Using Octokit to interact with github API.
+
+3. **favorite-microservice**: NestJS microservice that allow manage user favorite repositories. using mongoDB and mongoose ORM.
+
+## Installation
+
+Follow these steps to set up the application with docker locally:
+
+1. Clone the repository to your local machine: `git clone https://github.com/orharazi/zest-github-task.git`
+
+2. set up docker container : `docker-compose up`
+
+
+## Usage
+
+This will launch the application in your default web browser at `http://localhost:4173/`.
+
+1. **frontend**: This will launch the application in your default web browser at `http://localhost:4173/`.
+
+2. **github-microservice**: you can interact with this microservice at `http://localhost:3000`
+
+3. **favorite-microservice**: you can interact with this microservice at `http://localhost:3001`
+
+
+
+## About the services
+
+1. **frontend**: created with Vite, using Redux Toolkit state as state manager. 
+when you see the app you will notice that its have 2 tabs: "repositories" and "favorites".
+
+- repositories: you will see top 100 repositories (by starts AKA watchers) sorted by stars. Also, you can use the search bar to search for any github repositories. the list of repositories is infinity-scroll (max 100 results)
+
+- favorites: thus us where you can see and manage your favorites repositories. You can use the search bar to filter your favorite by name.
+
+
+
+Each repository contains it most relevant data when you click it. you can hit the "heart" to make repo your favorite or remove it. 
+
+
+
+2. **github-microservice**: This service has 2 routes:
+- GET `/github/top-repositories`: 
+Query params:
+```
+{
+    page: number;
+    repoName?: string;
+}
+```
+if `repoName` === null: the route will return 20 repositories that has the highest number of starts  (match the page, example: if page is 4 it will return 61-80 repositories matching the description before)
+
+else: the route will return 20 repositories match the value and the page
+
+- GET `/github/repository`: 
+Query params:
+```
+{
+    id: number;
+}
+```
+retrun data of repo by its id.
+
+3. **favorite-microservice**: This service has 3 routes:
+- GET `/favorites`: 
+
+for new user, this route will generate UUID and return empty response with JWT cookie that store its UUID for future calls
+
+for existing  user, the route will use the JWT cookie and extract the UUID inside in order to find all his favorite repos.
+
+retrun:
+```
+{
+    data: [{
+        repoId: String,
+        repoName: String,
+    }],
+    message: string
+}
+```
+
+- POST `/favorites/addFavorite`: This route will add new favorite repository to user.
+
+Body params:
+``` 
+{
+    repoId: number;
+    repoName: string;
+}
+```
+
+retrun:
+```
+{
+    data: {
+        repoId: String,
+        repoName: String,
+    },
+    message: string
+}
+```
+
+- DELTE `/favorites/deleteFavorite`:  This route will delete  favorite repository of user.
+Query params:
+``` 
+{
+    repoId: number;
+    repoName: string;
+}
+```
+
+retrun:
+```
+{
+    data: {
+        repoId: String,
+        repoName: String,
+    },
+    message: string
+}
+```
+
+
+**I'm here for any questions; feel free to reach me through WhatsApp or phone call :)**
+
+
+
+
+

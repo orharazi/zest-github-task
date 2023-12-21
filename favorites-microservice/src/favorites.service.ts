@@ -26,7 +26,9 @@ export class FavoritesService {
     let data: FavoriteModel[] = [];
     try {
       if (uuid) {
-        data = await this.favoriteModel.find({ uuid });
+        data = await this.favoriteModel
+          .find({ uuid })
+          .select('repoId repoName');
         message =
           data.length > 0
             ? 'Successfully found user favorites'
@@ -67,10 +69,12 @@ export class FavoritesService {
     let message: string;
     let data: FavoriteModel;
     try {
-      const favoriteAlreadyExist = await this.favoriteModel.findOne({
-        uuid,
-        ...createFavoriteDto,
-      });
+      const favoriteAlreadyExist = await this.favoriteModel
+        .findOne({
+          uuid,
+          ...createFavoriteDto,
+        })
+        .select('repoId repoName');
       if (favoriteAlreadyExist) {
         httpStatus = HttpStatus.CONFLICT;
         message = 'Favorite already exist';
@@ -110,10 +114,12 @@ export class FavoritesService {
     let message: string;
     let data: any;
     try {
-      const deletedItem = await this.favoriteModel.findOneAndDelete({
-        uuid,
-        ...deleteFavoriteDto,
-      });
+      const deletedItem = await this.favoriteModel
+        .findOneAndDelete({
+          uuid,
+          ...deleteFavoriteDto,
+        })
+        .select('repoId repoName');
       if (deletedItem) {
         httpStatus = HttpStatus.ACCEPTED;
         data = deletedItem;

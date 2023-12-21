@@ -2,7 +2,7 @@ import { IsNumber, IsNumberString, IsString } from 'class-validator';
 import { Document } from 'mongoose';
 
 export interface FavoriteModel extends Document {
-  readonly uuid: string;
+  uuid: string;
   readonly repoId: string;
   readonly repoName: string;
 }
